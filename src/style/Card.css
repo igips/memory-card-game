@@ -19,7 +19,7 @@
 
 .pictureDiv:hover {
     transform: scale(1.04);
-  }
+}
 
 img {
     width: 270px;
