@@ -1,83 +1,129 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style/App.css";
 import Header from "./components/Header.js";
 import Card from "./components/Card.js";
+import uniqid from 'uniqid';
 
 function App() {
-	const [state, setState] = useState({
-		cards: [
-			{
-				num: 1,
-				name: "Hagia Sophia — Istanbul, Turkey",
-				picked: false,
-			},
-			{
-				num: 2,
-				name: "Taj Mahal — Agra, India",
-				picked: false,
-			},
-			{
-				num: 3,
-				name: "Acropolis of Athens — Athens, Greece",
-				picked: false,
-			},
-			{
-				num: 4,
-				name: "Westminster Abbey — London, U.K.",
-				picked: false,
-			},
-			{
-				num: 5,
-				name: "Château Frontenac — Québec, Canada",
-				picked: false,
-			},
-			{
-				num: 6,
-				name: "The Colosseum — Rome, Italy",
-				picked: false,
-			},
-			{
-				num: 7,
-				name: "The White House — Washington, D.C., USA",
-				picked: false,
-			},
-			{
-				num: 8,
-				name: "Forbidden City — Beijing, China",
-				picked: false,
-			},
-			{
-				num: 9,
-				name: "Potala Palace — Lhasa, Tibet, China",
-				picked: false,
-			},
-			{
-				num: 10,
-				name: "Elizabeth Tower — London, U.K.",
-				picked: false,
-			},
-			{
-				num: 11,
-				name: "Eiffel Tower — Paris, France",
-				picked: false,
-			},
-			{
-				num: 12,
-				name: "Angkor Wat — Siem Reap, Cambodia",
-				picked: false,
-			},
-		],
+
+  const initialCardsData = [
+    {
+      num: 1,
+      name: "Hagia Sophia — Istanbul, Turkey",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 2,
+      name: "Taj Mahal — Agra, India",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 3,
+      name: "Acropolis of Athens — Athens, Greece",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 4,
+      name: "Westminster Abbey — London, U.K.",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 5,
+      name: "Château Frontenac — Québec, Canada",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 6,
+      name: "The Colosseum — Rome, Italy",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 7,
+      name: "The White House — Washington, D.C., USA",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 8,
+      name: "Forbidden City — Beijing, China",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 9,
+      name: "Potala Palace — Lhasa, Tibet, China",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 10,
+      name: "Elizabeth Tower — London, U.K.",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 11,
+      name: "Eiffel Tower — Paris, France",
+      picked: false,
+      id: uniqid(),
+    },
+    {
+      num: 12,
+      name: "Angkor Wat — Siem Reap, Cambodia",
+      picked: false,
+      id: uniqid(),
+    },
+  ];
+
+  const [state, setState] = useState({
+		cards: shuffleArray(initialCardsData),
     score: 0,
     bestScore: 0,
     lost: false,
 	});
+
+  function shuffleArray(toShuffle)  {
+    const array = toShuffle.map((x) => x);
+
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    
+    return array;
+  }
+
+  function handleClick(id) {
+  
+    setState({
+      ...state,
+      score: (state.score + 1),
+      
+    });
+   
+  }
+
+  function mixArrayAfterClick() {
+    setState({
+      ...state,
+      cards: shuffleArray(state.cards),
+    });
+  }
 
 	return (
 		<>
 			<Header score={state.score} bestScore={state.bestScore}></Header>
 			<main>
 				{state.cards.map((card) => {
-					return <Card picked={card.picked} src={card.num} name={card.name}></Card>;
+					return <Card  click={handleClick} id={card.id}  key={uniqid()} src={card.num} name={card.name}></Card>;
 				})}
 			</main>
 			<footer>
