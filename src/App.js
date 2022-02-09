@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./style/App.css";
 import Header from "./components/Header.js";
 import Card from "./components/Card.js";
+import Modal from "./components/Modal.js";
 import uniqid from "uniqid";
 
 
@@ -97,6 +98,11 @@ function App() {
 
   function hideModal() {
     setModal({show: false});
+    setState({
+      ...state,
+      cards: shuffleArray(initialCardsData),
+      score: 0,
+    })
   }
 
 	function shuffleArray(toShuffle) {
@@ -141,14 +147,15 @@ function App() {
 					score: state.score + 1,
 				};
 			} else {
+        showModal();
+       
 				if (state.score > bestS) {
 					bestS = state.score;
 				}
 
 				return {
-					cards: shuffleArray(initialCardsData),
+					...state,
 					bestScore: bestS,
-					score: 0,
 				};
 			}
 		});
@@ -156,6 +163,7 @@ function App() {
 
 	return (
 		<>
+      <Modal score={state.score} show={modal.show} close={hideModal}></Modal>
 			<Header score={state.score} bestScore={state.bestScore}></Header>
 			<main>
 				{state.cards.map((card) => {
