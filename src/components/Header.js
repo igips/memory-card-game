@@ -7,9 +7,9 @@ function Header(props) {
 			<span>Architecture Memory Game</span> <br />
 			<div id="rules">Get points by clicking on an image but don't click on any more than once!</div>
 			<div id="scoreDiv">
-				<span>Score: {props.score}</span>
-				<span>Best Score: {props.bestScore}</span>
-			</div>
+					<span>Score: {props.score}</span>
+					<span>Best Score: {props.bestScore}</span>
+				</div>
 		</header>
 	);
 }
