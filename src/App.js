@@ -5,7 +5,6 @@ import Card from "./components/Card.js";
 import Modal from "./components/Modal.js";
 import uniqid from "uniqid";
 
-
 function App() {
 	const initialCardsData = [
 		{
@@ -82,9 +81,9 @@ function App() {
 		},
 	];
 
-  const [modal, setModal] = useState({
-    show: false,
-  });
+	const [modal, setModal] = useState({
+		show: false,
+	});
 
 	const [state, setState] = useState({
 		cards: shuffleArray(initialCardsData),
@@ -92,18 +91,18 @@ function App() {
 		bestScore: 0,
 	});
 
-  function showModal() {
-    setModal({show: true});
-  }
+	function showModal() {
+		setModal({ show: true });
+	}
 
-  function hideModal() {
-    setModal({show: false});
-    setState({
-      ...state,
-      cards: shuffleArray(initialCardsData),
-      score: 0,
-    })
-  }
+	function hideModal() {
+		setModal({ show: false });
+		setState({
+			...state,
+			cards: shuffleArray(initialCardsData),
+			score: 0,
+		});
+	}
 
 	function shuffleArray(toShuffle) {
 		const array = toShuffle.map((x) => x);
@@ -140,15 +139,23 @@ function App() {
 				}
 			});
 
-			if (!lostGame) {
+			if (!lostGame && state.score === 11) {
+				showModal();
+
+				return {
+					cards: shuffleArray(newCards),
+					score: state.score + 1,
+					bestScore: 12,
+				};
+			} else if (!lostGame) {
 				return {
 					...prevState,
 					cards: shuffleArray(newCards),
 					score: state.score + 1,
 				};
 			} else {
-        showModal();
-       
+				showModal();
+
 				if (state.score > bestS) {
 					bestS = state.score;
 				}
@@ -163,7 +170,7 @@ function App() {
 
 	return (
 		<>
-      <Modal score={state.score} show={modal.show} close={hideModal}></Modal>
+			<Modal score={state.score} show={modal.show} close={hideModal}></Modal>
 			<Header score={state.score} bestScore={state.bestScore}></Header>
 			<main>
 				{state.cards.map((card) => {
