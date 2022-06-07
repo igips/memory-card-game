@@ -1,6 +1,6 @@
 # Memory card game
 
-Memory card game created with React.
+Memory card game made with React.
 
 [Live Demo](https://igips.github.io/memory-card-game/) :point_left:
 
